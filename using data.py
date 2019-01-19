@@ -1,4 +1,5 @@
 from util import Util
+from treatment import Treatment
 
 utility = Util()
 file = utility.read_file('mega.txt')  # file = Lista de strings
@@ -8,6 +9,8 @@ for index in file:
     aux_file.append(index.replace(',\n', '').split(','))
 
 all_lottery = aux_file
+# all_lottery stores all result of lottery as a list of lists
+
 del aux_file
 
 numbers_frequency = {key: 0 for key in range(1,61)}
@@ -30,31 +33,23 @@ print(numbers_frequency)
 position = 1
 numbers_position = {}
 for item in sorted(numbers_frequency, key=numbers_frequency.get, reverse=True):
-    #print('Número sorteado:', item, ' \tQtd de vezes', numbers_frequency[item], '\tPosição:', position)
-    numbers_position.update({item:position})
-    position +=1
+    # print('Número sorteado:', item, ' \tQtd de vezes',
+    #  numbers_frequency[item], '\tPosição:', position)
+    numbers_position.update({item: position})
+    position += 1
 
-mom_bets = [[10,11,14,15,16,18,28,58],
-            [1,4,9,13,27,31,51,56],
-            [3,9,27,34,41,46,51,56],
-            [1,4,13,31,34,41,46,51],
-            [5,10,11,15,18,20,28,43],
-            [5,6,8,10,18,28,29,40],
-            [1,4,24,31,33,34,37,41],
-            [4,12,24,27,34,37,41,44],
-            [1,3,4,12,24,27,33,44]
-            ]
+treatment = Treatment()
+even_quantity = treatment.how_many_pairs(all_lottery)
 
-mom_bets_positions = []
+neighbors_1 = treatment.neighborhood(all_lottery, 1)
+neighbors_2 = treatment.neighborhood(all_lottery, 2)
+neighbors_3 = treatment.neighborhood(all_lottery, 3)
+neighbors_4 = treatment.neighborhood(all_lottery, 4)
+neighbors_5 = treatment.neighborhood(all_lottery, 5)
 
-for bet in mom_bets:
-    aux_mbp = []
-    for number in bet:
-        aux_mbp.append(numbers_position.get(number))
-
-    mom_bets_positions.append(aux_mbp)
-
-
-for bet in mom_bets_positions:
-    print(bet)
-
+print('Quantidade de pares:\n', even_quantity)
+print('\n\n Distância 1\n', neighbors_1)
+print('\n\n Distância 2\n', neighbors_2)
+print('\n\n Distância 3\n', neighbors_3)
+print('\n\n Distância 4\n', neighbors_4)
+print('\n\n Distância 5\n', neighbors_5)
